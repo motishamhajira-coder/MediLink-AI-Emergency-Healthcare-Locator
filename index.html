@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediLink — Nearby Emergency Services Locator</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">+</span>
+      <div class="brand-text">
+        <h1>MediLink</h1>
+        <p class="tagline">Nearby Emergency Services Locator</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Loading overlay -->
+    <section id="loading-panel" class="status-panel loading-panel" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Requesting your location…</p>
+      <p class="status-hint">Please allow location access when prompted.</p>
+    </section>
+
+    <!-- Error overlay -->
+    <section id="error-panel" class="status-panel error-panel hidden" aria-live="assertive">
+      <div class="error-icon" aria-hidden="true">!</div>
+      <h2 id="error-title">Location unavailable</h2>
+      <p id="error-message">We could not access your location.</p>
+      <button type="button" id="retry-btn" class="btn btn-primary">Try again</button>
+    </section>
+
+    <!-- Main locator UI (hidden until location is ready) -->
+    <section id="locator-app" class="locator-app hidden">
+      <aside class="sidebar" aria-label="Hospital list and filters">
+        <div class="sidebar-header">
+          <h2>Nearby Hospitals</h2>
+          <p id="user-location-summary" class="location-summary"></p>
+        </div>
+
+        <div class="filters" role="group" aria-label="Filter hospitals by facility">
+          <h3>Filter by facility</h3>
+          <label class="filter-chip">
+            <input type="checkbox" id="filter-icu" data-filter="icu">
+            <span>ICU Available</span>
+          </label>
+          <label class="filter-chip">
+            <input type="checkbox" id="filter-blood" data-filter="blood_bank">
+            <span>Blood Bank</span>
+          </label>
+          <label class="filter-chip">
+            <input type="checkbox" id="filter-emergency" data-filter="emergency_care">
+            <span>Emergency Care</span>
+          </label>
+          <button type="button" id="clear-filters" class="btn btn-ghost btn-sm">Clear filters</button>
+        </div>
+
+        <p id="results-count" class="results-count" aria-live="polite"></p>
+
+        <ul id="hospital-list" class="hospital-list" role="list"></ul>
+      </aside>
+
+      <div class="map-wrapper">
+        <div id="map" class="map" role="application" aria-label="Interactive map of nearby hospitals"></div>
+        <div class="map-legend" aria-hidden="true">
+          <span class="legend-item legend-user"><span class="dot dot-blue"></span> You are here</span>
+          <span class="legend-item legend-hospital"><span class="dot dot-red"></span> Emergency hospital</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>MediLink Hackathon Demo — OpenStreetMap &amp; Leaflet.js</p>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="script.js"></script>
+</body>
+</html>
